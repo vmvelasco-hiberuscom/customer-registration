@@ -1,0 +1,62 @@
+:host { display: block; }
+
+.rf { width: 100%; }
+
+.rf-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem 1.25rem;
+}
+
+.rf-field { display: flex; flex-direction: column; gap: 0.25rem; }
+.rf-field--full { grid-column: 1 / -1; }
+
+.rf-label { font-size: 0.8rem; font-weight: 600; color: #374151; }
+
+.rf-input {
+  padding: 0.575rem 0.875rem;
+  border: 1.5px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  color: #1e293b;
+  background: #fff;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.rf-input:focus       { border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+.rf-input--invalid    { border-color: #ef4444; }
+.rf-hint              { font-size: 0.75rem; color: #94a3b8; }
+.rf-error             { font-size: 0.75rem; color: #ef4444; }
+
+.rf-checkbox          { display: flex; align-items: flex-start; gap: 0.5rem; cursor: pointer; font-size: 0.875rem; color: #374151; }
+.rf-checkbox input    { margin-top: 0.2rem; accent-color: #2563eb; flex-shrink: 0; }
+
+.rf-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #f1f5f9;
+}
+
+.rf-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 8px; font-size: 0.875rem; font-weight: 600;
+  padding: 0.575rem 1.4rem; cursor: pointer; transition: background 0.15s, opacity 0.15s;
+  text-decoration: none; border: none;
+}
+.rf-btn--primary  { background: #2563eb; color: white; }
+.rf-btn--primary:hover:not(:disabled) { background: #1d4ed8; }
+.rf-btn--primary:disabled { opacity: 0.6; cursor: not-allowed; }
+.rf-btn--secondary { background: #fff; color: #475569; border: 1px solid #d1d5db; }
+.rf-btn--secondary:hover { background: #f8fafc; }
+
+.rf-api-error { font-size: 0.875rem; color: #ef4444; margin-top: 0.75rem; }
+
+@media (max-width: 640px) {
+  .rf-grid { grid-template-columns: 1fr; }
+  .rf-actions { flex-direction: column-reverse; }
+  .rf-btn { width: 100%; justify-content: center; }
+}
+

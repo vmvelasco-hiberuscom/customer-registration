@@ -1,0 +1,64 @@
+:host { display: block; }
+
+.reg-page {
+  padding: 1.5rem 2rem 2rem;
+  max-width: 800px;
+}
+
+/* Back link */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #2563eb;
+  text-decoration: none;
+  margin-bottom: 1.25rem;
+}
+.back-link:hover { text-decoration: underline; }
+
+/* Page heading */
+.reg-header { margin-bottom: 1.5rem; }
+.reg-header__title    { font-size: 1.4rem; font-weight: 700; color: #1e293b; margin: 0 0 0.2rem; }
+.reg-header__subtitle { font-size: 0.875rem; color: #64748b; margin: 0; }
+
+/* Card */
+.reg-card {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+
+.reg-avatar {
+  width: 64px; height: 64px; border-radius: 50%;
+  background: #2563eb;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 0.75rem;
+}
+
+.reg-card__title {
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 1.75rem;
+}
+
+/* Alert */
+.reg-alert {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 0.75rem; padding: 0.75rem 1rem; border-radius: 8px;
+  font-size: 0.875rem; margin-bottom: 1rem;
+  border: 1px solid transparent;
+}
+.reg-alert--success { background: #f0fdf4; color: #16a34a; border-color: #bbf7d0; }
+.reg-alert--error   { background: #fef2f2; color: #b91c1c; border-color: #fecaca; }
+.reg-alert__close   { background: none; border: none; cursor: pointer; color: inherit; font-size: 1rem; }
+
+@media (max-width: 767px) {
+  .reg-page { padding: 1.25rem 1rem 1.5rem; }
+  .reg-card { padding: 1.25rem; }
+}

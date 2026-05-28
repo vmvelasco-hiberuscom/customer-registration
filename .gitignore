@@ -1,0 +1,34 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Node / Angular
+**/node_modules/
+**/dist/
+**/.angular/
+**/coverage/
+
+# Java / Maven
+**/target/
+*.class
+*.log
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.pyc
+
+# Terraform / infra
+*.tfstate
+*.tfstate.*
+.terraform/
+
+# Misc
+*.tmp
+*.swp

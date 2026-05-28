@@ -1,0 +1,74 @@
+:host { display: block; }
+
+.reg-page {
+  padding: 2rem;
+  max-width: 720px;
+}
+
+.page-header { margin-bottom: 1.5rem; }
+.page-header__title    { font-size: 1.4rem; font-weight: 700; color: #1e293b; margin: 0; }
+.page-header__subtitle { font-size: 0.85rem; color: #64748b; margin: 0.15rem 0 0; }
+
+.form-card {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+
+.alert {
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  margin-bottom: 1.25rem;
+}
+.alert--error { background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
+
+/* Reutiliza clases rf- del sistema de formularios existente */
+.rf-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem 1.25rem;
+}
+
+.rf-field { display: flex; flex-direction: column; gap: 0.25rem; }
+.rf-field--full { grid-column: 1 / -1; }
+
+.rf-label { font-size: 0.8rem; font-weight: 600; color: #374151; }
+
+.rf-input {
+  padding: 0.575rem 0.875rem;
+  border: 1.5px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  color: #1e293b;
+  background: #fff;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  font-family: inherit;
+}
+.rf-input:focus    { border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+.rf-input--invalid { border-color: #ef4444; }
+.rf-textarea       { resize: vertical; min-height: 80px; }
+.rf-error          { font-size: 0.75rem; color: #ef4444; }
+
+.rf-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #f1f5f9;
+}
+.rf-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 8px; font-size: 0.875rem; font-weight: 600;
+  padding: 0.575rem 1.4rem; cursor: pointer; transition: background 0.15s;
+  text-decoration: none; border: none;
+}
+.rf-btn--primary   { background: #2563eb; color: white; }
+.rf-btn--primary:hover:not(:disabled) { background: #1d4ed8; }
+.rf-btn--primary:disabled { opacity: 0.6; cursor: not-allowed; }
+.rf-btn--secondary { background: #f1f5f9; color: #475569; }
+.rf-btn--secondary:hover { background: #e2e8f0; }

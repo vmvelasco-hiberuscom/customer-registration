@@ -1,0 +1,7 @@
+:host {
+  display: block;
+}
+
+.validation-summary {
+  border-left: 4px solid #b02a37;
+}

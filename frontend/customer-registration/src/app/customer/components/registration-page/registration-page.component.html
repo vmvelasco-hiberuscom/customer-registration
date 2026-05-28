@@ -1,0 +1,54 @@
+<div class="reg-page">
+
+  <!-- Back link -->
+  <a class="back-link" routerLink="/customers">
+    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+    </svg>
+    Volver
+  </a>
+
+  <!-- Page heading -->
+  <div class="reg-header">
+    <h1 class="reg-header__title" id="reg-title">Alta de usuarios</h1>
+    <p class="reg-header__subtitle">Completa el formulario para registrar un nuevo usuario.</p>
+  </div>
+
+  <!-- Card -->
+  <div class="reg-card">
+
+    <!-- User avatar icon -->
+    <div class="reg-avatar" aria-hidden="true">
+      <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="white" viewBox="0 0 16 16">
+        <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4z"/>
+        <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
+      </svg>
+    </div>
+    <h2 class="reg-card__title">Nuevo usuario</h2>
+
+    <app-loading-spinner [visible]="(loading$ | async) ?? false"></app-loading-spinner>
+
+    <div
+      class="reg-alert"
+      *ngIf="(notification$ | async) as notice"
+      [class.reg-alert--success]="notice.type === 'success'"
+      [class.reg-alert--error]="notice.type === 'error'"
+      role="status"
+      aria-live="polite">
+      <span>{{ notice.message }}</span>
+      <button type="button" class="reg-alert__close" aria-label="Cerrar" (click)="dismissNotification()">✕</button>
+    </div>
+
+    <app-registration-form
+      (registered)="onRegistered($event)"
+      (failed)="onRegisterFailed($event)">
+    </app-registration-form>
+  </div>
+
+  <app-success-modal
+    [visible]="showSuccessModal"
+    [email]="successEmail"
+    (closed)="closeSuccessModal()">
+  </app-success-modal>
+
+</div>

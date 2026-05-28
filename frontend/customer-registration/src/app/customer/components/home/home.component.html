@@ -1,0 +1,133 @@
+<div class="home-page">
+
+  <!-- Header -->
+  <div class="page-header">
+    <h1 class="page-header__title">Bienvenido, Admin</h1>
+    <p class="page-header__subtitle">Gestiona tus clientes y usuarios desde aquí.</p>
+  </div>
+
+  <!-- Feature cards -->
+  <div class="feature-cards">
+
+    <div class="feature-card feature-card--blue">
+      <div class="feature-card__icon-wrap feature-card__icon-wrap--blue">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="white" viewBox="0 0 16 16">
+          <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.029 10 8 10c-2.029 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+          <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
+        </svg>
+      </div>
+      <h2 class="feature-card__title">Alta de usuarios</h2>
+      <p class="feature-card__desc">Registra un nuevo usuario en el sistema</p>
+      <button class="feature-card__btn feature-card__btn--blue" (click)="goToRegistration()" aria-label="Ir a alta de usuarios">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="feature-card feature-card--green">
+      <div class="feature-card__icon-wrap feature-card__icon-wrap--green">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="white" viewBox="0 0 16 16">
+          <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002H7.022zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>
+        </svg>
+      </div>
+      <h2 class="feature-card__title">Usuarios</h2>
+      <p class="feature-card__desc">Consulta y administra los usuarios registrados</p>
+      <button class="feature-card__btn feature-card__btn--green" (click)="goToCustomers()" aria-label="Ir a lista de usuarios">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="feature-card feature-card--orange">
+      <div class="feature-card__icon-wrap feature-card__icon-wrap--orange">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="white" viewBox="0 0 16 16">
+          <path d="M0 1.5A1.5 1.5 0 0 1 1.5 0h13A1.5 1.5 0 0 1 16 1.5v13a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 14.5v-13zm1.5-.5a.5.5 0 0 0-.5.5V5h14V1.5a.5.5 0 0 0-.5-.5h-13zM16 6H0v3.5h16V6zM0 10.5V14.5a.5.5 0 0 0 .5.5H5V10.5H0zm6 4.5h4V10.5H6V15zm5 0h4.5a.5.5 0 0 0 .5-.5V10.5H11V15z"/>
+        </svg>
+      </div>
+      <h2 class="feature-card__title">Productos</h2>
+      <p class="feature-card__desc">Consulta el catálogo de productos del sistema</p>
+      <button class="feature-card__btn feature-card__btn--orange" (click)="goToProducts()" aria-label="Ir a productos">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="feature-card feature-card--purple">
+      <div class="feature-card__icon-wrap feature-card__icon-wrap--purple">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="white" viewBox="0 0 16 16">
+          <path d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2z"/>
+        </svg>
+      </div>
+      <h2 class="feature-card__title">Alta de producto</h2>
+      <p class="feature-card__desc">Registra un nuevo producto en el catálogo</p>
+      <button class="feature-card__btn feature-card__btn--purple" (click)="goToProductRegistration()" aria-label="Ir a alta de producto">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"/>
+        </svg>
+      </button>
+    </div>
+
+  </div>
+
+  <!-- Summary stats -->
+  <div class="summary-section">
+    <h3 class="summary-section__title">Resumen</h3>
+    <div class="stats-grid">
+
+      <div class="stat-card">
+        <div class="stat-card__icon stat-card__icon--blue">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4z"/>
+          </svg>
+        </div>
+        <div class="stat-card__body">
+          <span class="stat-card__label">Usuarios activos</span>
+          <span class="stat-card__value">{{ activeCount }}</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-card__icon stat-card__icon--teal">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zM1 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H1zm7.5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM3 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
+          </svg>
+        </div>
+        <div class="stat-card__body">
+          <span class="stat-card__label">Clientes registrados</span>
+          <span class="stat-card__value">{{ activeCount }}</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-card__icon stat-card__icon--purple">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+            <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
+          </svg>
+        </div>
+        <div class="stat-card__body">
+          <span class="stat-card__label">Administradores</span>
+          <span class="stat-card__value">1</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-card__icon stat-card__icon--orange">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/>
+            <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z"/>
+          </svg>
+        </div>
+        <div class="stat-card__body">
+          <span class="stat-card__label">Último acceso</span>
+          <span class="stat-card__value stat-card__value--sm">{{ lastAccess }}</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,18 @@
+<div class="modal-backdrop fade show" *ngIf="visible"></div>
+<div class="modal d-block" tabindex="-1" *ngIf="visible" role="dialog" aria-modal="true" aria-labelledby="registration-success-title" aria-describedby="registration-success-message">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 id="registration-success-title" class="modal-title">Registration Successful</h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="close()"></button>
+      </div>
+      <div class="modal-body">
+        <p id="registration-success-message" class="mb-1">Account created successfully.</p>
+        <p class="mb-0"><strong>{{ email }}</strong> can now log in.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="close()">Continue</button>
+      </div>
+    </div>
+  </div>
+</div>

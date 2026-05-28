@@ -1,0 +1,32 @@
+### Success case
+POST http://localhost:8080/api/v1/customers/register
+Content-Type: application/json
+
+{
+  "email": "success-{{$timestamp}}@example.com",
+  "firstName": "Ada",
+  "lastName": "Lovelace",
+  "password": "Strong1!"
+}
+
+### Validation error
+POST http://localhost:8080/api/v1/customers/register
+Content-Type: application/json
+
+{
+  "email": "invalid-email",
+  "firstName": "A",
+  "lastName": "B",
+  "password": "weak"
+}
+
+### Duplicate email
+POST http://localhost:8080/api/v1/customers/register
+Content-Type: application/json
+
+{
+  "email": "existing@example.com",
+  "firstName": "Grace",
+  "lastName": "Hopper",
+  "password": "Strong1!"
+}

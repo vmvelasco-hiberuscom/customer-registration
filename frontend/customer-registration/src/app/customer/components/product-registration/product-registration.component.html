@@ -1,0 +1,62 @@
+<div class="reg-page">
+
+  <div class="page-header">
+    <div class="page-header__left">
+      <h1 class="page-header__title">Alta de producto</h1>
+      <p class="page-header__subtitle">Introduce los datos del nuevo producto.</p>
+    </div>
+  </div>
+
+  <div class="form-card">
+
+    <div *ngIf="apiError" class="alert alert--error" role="alert">
+      {{ apiError }}
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+
+      <div class="rf-grid">
+
+        <div class="rf-field rf-field--full">
+          <label for="nombre" class="rf-label">Nombre</label>
+          <input id="nombre" class="rf-input"
+            [class.rf-input--invalid]="control('nombre')?.invalid && (control('nombre')?.dirty || control('nombre')?.touched)"
+            type="text" formControlName="nombre" autocomplete="off" />
+          <span class="rf-error" *ngIf="control('nombre')?.invalid && (control('nombre')?.dirty || control('nombre')?.touched)">
+            El nombre es obligatorio (máx. 200 caracteres).
+          </span>
+        </div>
+
+        <div class="rf-field rf-field--full">
+          <label for="descripcion" class="rf-label">Descripción</label>
+          <textarea id="descripcion" class="rf-input rf-textarea"
+            [class.rf-input--invalid]="control('descripcion')?.invalid && (control('descripcion')?.dirty || control('descripcion')?.touched)"
+            formControlName="descripcion" rows="3"></textarea>
+          <span class="rf-error" *ngIf="control('descripcion')?.invalid && (control('descripcion')?.dirty || control('descripcion')?.touched)">
+            La descripción es obligatoria (máx. 1000 caracteres).
+          </span>
+        </div>
+
+        <div class="rf-field">
+          <label for="precio" class="rf-label">Precio (€)</label>
+          <input id="precio" class="rf-input"
+            [class.rf-input--invalid]="control('precio')?.invalid && (control('precio')?.dirty || control('precio')?.touched)"
+            type="number" min="0" step="0.01" formControlName="precio" />
+          <span class="rf-error" *ngIf="control('precio')?.invalid && (control('precio')?.dirty || control('precio')?.touched)">
+            Introduce un precio válido (≥ 0).
+          </span>
+        </div>
+
+      </div>
+
+      <div class="rf-actions">
+        <a class="rf-btn rf-btn--secondary" routerLink="/products">Cancelar</a>
+        <button class="rf-btn rf-btn--primary" type="submit" [disabled]="isSubmitting">
+          {{ isSubmitting ? 'Guardando...' : 'Guardar producto' }}
+        </button>
+      </div>
+
+    </form>
+  </div>
+
+</div>

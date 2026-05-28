@@ -1,0 +1,173 @@
+<div class="list-page">
+
+  <!-- Page header -->
+  <div class="page-header">
+    <div class="page-header__left">
+      <h1 class="page-header__title">Usuarios</h1>
+      <p class="page-header__subtitle">Listado de usuarios registrados en el sistema.</p>
+    </div>
+    <button class="btn-new" (click)="goToRegistration()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" viewBox="0 0 16 16">
+        <path d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2z"/>
+      </svg>
+      Nuevo usuario
+    </button>
+  </div>
+
+  <!-- Alerts -->
+  <div *ngIf="deleteError" class="list-alert list-alert--error" role="alert">
+    {{ deleteError }}
+    <button type="button" class="list-alert__close" (click)="deleteError = ''" aria-label="Cerrar">✕</button>
+  </div>
+
+  <!-- Toolbar (search + filter) -->
+  <div class="toolbar">
+    <div class="search-wrap">
+      <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" viewBox="0 0 16 16">
+        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.099zm-5.242 1.656a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11z"/>
+      </svg>
+      <input
+        class="search-input"
+        type="search"
+        placeholder="Buscar usuario..."
+        [(ngModel)]="searchTerm"
+        (ngModelChange)="onSearch()"
+        aria-label="Buscar usuario">
+    </div>
+    <button class="btn-filter">
+      <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" viewBox="0 0 16 16">
+        <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2z"/>
+      </svg>
+      Filtrar
+    </button>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="state-center">
+    <div class="spinner" role="status">
+      <span class="visually-hidden">Cargando...</span>
+    </div>
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="!loading && error" class="list-alert list-alert--error">{{ error }}</div>
+
+  <!-- Table card -->
+  <div *ngIf="!loading && !error" class="table-card">
+    <div class="table-scroll">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Email</th>
+            <th>Estado</th>
+            <th>Fecha de alta</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let customer of pagedCustomers; let i = index"
+              [class.row--editing]="editingCustomer?.customerId === customer.customerId">
+            <td class="cell--id">{{ (currentPage - 1) * pageSize + i + 1 }}</td>
+            <td class="cell--name">{{ customer.firstName }} {{ customer.lastName }}</td>
+            <td>{{ customer.email }}</td>
+            <td>
+              <span class="badge" [class.badge--active]="customer.status === 'active'"
+                    [class.badge--deleted]="customer.status !== 'active'">
+                {{ customer.status === 'active' ? 'Activo' : 'Inactivo' }}
+              </span>
+            </td>
+            <td>{{ customer.registrationDate | date:'dd/MM/yyyy' }}</td>
+            <td class="cell--actions">
+              <ng-container *ngIf="deletingId !== customer.customerId; else deleteConfirm">
+
+                <button class="action-btn action-btn--edit" title="Editar"
+                        (click)="startEdit(customer)"
+                        [disabled]="editingCustomer !== null && editingCustomer.customerId !== customer.customerId">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
+                  </svg>
+                </button>
+                <button class="action-btn action-btn--delete" title="Eliminar"
+                        (click)="startDelete(customer.customerId)">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
+                    <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
+                  </svg>
+                </button>
+              </ng-container>
+
+              <ng-template #deleteConfirm>
+                <span class="confirm-label">¿Eliminar?</span>
+                <button class="action-btn action-btn--confirm" (click)="confirmDelete(customer.customerId)">Sí</button>
+                <button class="action-btn action-btn--cancel"  (click)="cancelDelete()">No</button>
+              </ng-template>
+            </td>
+          </tr>
+
+          <tr *ngIf="pagedCustomers.length === 0">
+            <td colspan="6" class="cell--empty">No hay usuarios que coincidan con la búsqueda.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination-bar" *ngIf="filteredCustomers.length > pageSize || filteredCustomers.length > 0">
+      <span class="pagination-bar__info">
+        Mostrando {{ (currentPage - 1) * pageSize + 1 }}–{{ currentPage * pageSize < filteredCustomers.length ? currentPage * pageSize : filteredCustomers.length }} de {{ filteredCustomers.length }} resultados
+      </span>
+      <div class="pagination-bar__pages">
+        <button class="page-btn" [disabled]="currentPage === 1" (click)="goToPage(currentPage - 1)">‹</button>
+        <ng-container *ngFor="let p of pageNumbers">
+          <button class="page-btn" [class.page-btn--active]="p === currentPage" (click)="goToPage(p)">{{ p }}</button>
+        </ng-container>
+        <button class="page-btn" [disabled]="currentPage === totalPages" (click)="goToPage(currentPage + 1)">›</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit form panel -->
+  <div *ngIf="editingCustomer" class="edit-panel">
+    <div class="edit-panel__header">
+      <h5 class="edit-panel__title">Editar usuario</h5>
+      <span class="edit-panel__email">{{ editingCustomer.email }}</span>
+      <button type="button" class="edit-panel__close" (click)="cancelEdit()" aria-label="Cerrar">✕</button>
+    </div>
+    <div class="edit-panel__body">
+      <div *ngIf="saveError" class="list-alert list-alert--error mb-3">{{ saveError }}</div>
+      <form [formGroup]="editForm" (ngSubmit)="submitEdit()">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="editFirstName">Nombre</label>
+            <input id="editFirstName" type="text" class="form-input"
+                   [class.form-input--invalid]="editForm.get('firstName')?.invalid && editForm.get('firstName')?.touched"
+                   formControlName="firstName" autocomplete="given-name">
+            <span class="form-error" *ngIf="editForm.get('firstName')?.invalid && editForm.get('firstName')?.touched">
+              Mínimo 3 caracteres, solo letras.
+            </span>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="editLastName">Apellido</label>
+            <input id="editLastName" type="text" class="form-input"
+                   [class.form-input--invalid]="editForm.get('lastName')?.invalid && editForm.get('lastName')?.touched"
+                   formControlName="lastName" autocomplete="family-name">
+            <span class="form-error" *ngIf="editForm.get('lastName')?.invalid && editForm.get('lastName')?.touched">
+              Mínimo 3 caracteres, solo letras.
+            </span>
+          </div>
+        </div>
+        <div class="edit-panel__actions">
+          <button type="button" class="btn-secondary" (click)="cancelEdit()">Cancelar</button>
+          <button type="submit" class="btn-primary" [disabled]="editForm.invalid || saving">
+            <span *ngIf="saving" class="spinner spinner--sm" role="status" aria-hidden="true"></span>
+            Guardar cambios
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</div>
+

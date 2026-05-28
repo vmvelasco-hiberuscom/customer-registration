@@ -1,0 +1,84 @@
+<form class="rf" [formGroup]="form" (ngSubmit)="submit()" novalidate aria-describedby="rf-help">
+  <p id="rf-help" class="visually-hidden">
+    Todos los campos son obligatorios. La contraseña debe incluir mayúsculas, minúsculas, número y carácter especial.
+  </p>
+
+  <app-validation-summary [form]="form"></app-validation-summary>
+
+  <div class="rf-grid">
+
+    <div class="rf-field rf-field--full">
+      <label for="email" class="rf-label">Email</label>
+      <input id="email" class="rf-input"
+        [class.rf-input--invalid]="control('email')?.invalid && (control('email')?.dirty || control('email')?.touched)"
+        type="email" formControlName="email" autocomplete="email" aria-describedby="email-help email-error"/>
+      <span id="email-help" class="rf-hint">Introduce un email válido, ej. usuario&#64;ejemplo.com.</span>
+      <span id="email-error" class="rf-error" *ngIf="control('email')?.invalid && (control('email')?.dirty || control('email')?.touched)">
+        Introduce un email válido.
+      </span>
+    </div>
+
+    <div class="rf-field">
+      <label for="firstName" class="rf-label">Nombre</label>
+      <input id="firstName" class="rf-input"
+        [class.rf-input--invalid]="control('firstName')?.invalid && (control('firstName')?.dirty || control('firstName')?.touched)"
+        type="text" formControlName="firstName" autocomplete="given-name" aria-describedby="fn-error"/>
+      <span id="fn-error" class="rf-error" *ngIf="control('firstName')?.invalid && (control('firstName')?.dirty || control('firstName')?.touched)">
+        Mínimo 3 caracteres, solo letras.
+      </span>
+    </div>
+
+    <div class="rf-field">
+      <label for="lastName" class="rf-label">Apellido</label>
+      <input id="lastName" class="rf-input"
+        [class.rf-input--invalid]="control('lastName')?.invalid && (control('lastName')?.dirty || control('lastName')?.touched)"
+        type="text" formControlName="lastName" autocomplete="family-name" aria-describedby="ln-error"/>
+      <span id="ln-error" class="rf-error" *ngIf="control('lastName')?.invalid && (control('lastName')?.dirty || control('lastName')?.touched)">
+        Mínimo 3 caracteres, solo letras.
+      </span>
+    </div>
+
+    <div class="rf-field">
+      <label for="password" class="rf-label">Contraseña</label>
+      <input id="password" class="rf-input"
+        [class.rf-input--invalid]="control('password')?.invalid && (control('password')?.dirty || control('password')?.touched)"
+        type="password" formControlName="password" autocomplete="new-password" aria-describedby="pw-hint pw-error"/>
+      <span id="pw-hint" class="rf-hint">Mínimo 8 caracteres con mayúscula, minúscula, número y carácter especial.</span>
+      <span id="pw-error" class="rf-error" *ngIf="control('password')?.invalid && (control('password')?.dirty || control('password')?.touched)">
+        La contraseña no cumple los requisitos de seguridad.
+      </span>
+    </div>
+
+    <div class="rf-field">
+      <label for="confirmPassword" class="rf-label">Confirmar contraseña</label>
+      <input id="confirmPassword" class="rf-input"
+        [class.rf-input--invalid]="(control('confirmPassword')?.invalid && (control('confirmPassword')?.dirty || control('confirmPassword')?.touched)) || (form.hasError('passwordMismatch') && (control('confirmPassword')?.dirty || control('confirmPassword')?.touched))"
+        type="password" formControlName="confirmPassword" autocomplete="new-password" aria-describedby="cpw-error"/>
+      <span id="cpw-error" class="rf-error" *ngIf="(control('confirmPassword')?.invalid && (control('confirmPassword')?.dirty || control('confirmPassword')?.touched)) || (form.hasError('passwordMismatch') && (control('confirmPassword')?.dirty || control('confirmPassword')?.touched))">
+        Las contraseñas no coinciden.
+      </span>
+    </div>
+
+    <div class="rf-field rf-field--full">
+      <label class="rf-checkbox">
+        <input type="checkbox" formControlName="termsAccepted"
+          [class.rf-checkbox__input--invalid]="control('termsAccepted')?.invalid && (control('termsAccepted')?.dirty || control('termsAccepted')?.touched)"
+          aria-describedby="terms-error"/>
+        <span>Acepto los términos y la política de privacidad.</span>
+      </label>
+      <span id="terms-error" class="rf-error" *ngIf="control('termsAccepted')?.invalid && (control('termsAccepted')?.dirty || control('termsAccepted')?.touched)">
+        Debes aceptar los términos para continuar.
+      </span>
+    </div>
+
+  </div>
+
+  <div class="rf-actions">
+    <a class="rf-btn rf-btn--secondary" routerLink="/customers">Cancelar</a>
+    <button class="rf-btn rf-btn--primary" type="submit" [disabled]="isSubmitting" aria-live="polite">
+      {{ isSubmitting ? 'Guardando...' : 'Guardar usuario' }}
+    </button>
+  </div>
+
+  <p class="rf-api-error" *ngIf="apiError" role="alert">{{ apiError }}</p>
+</form>

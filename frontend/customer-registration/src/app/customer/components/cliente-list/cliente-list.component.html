@@ -1,0 +1,54 @@
+<div class="list-page">
+
+  <div class="page-header">
+    <div class="page-header__left">
+      <h1 class="page-header__title">Clientes</h1>
+      <p class="page-header__subtitle">Usuarios que han realizado al menos un envío.</p>
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <div class="search-wrap">
+      <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" viewBox="0 0 16 16">
+        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.099zm-5.242 1.656a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11z"/>
+      </svg>
+      <input class="search-input" type="search" placeholder="Buscar por nombre o email..."
+        [(ngModel)]="searchTerm" aria-label="Buscar cliente">
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="state-center">
+    <div class="spinner" role="status"><span class="visually-hidden">Cargando...</span></div>
+  </div>
+
+  <div *ngIf="!loading && error" class="list-alert list-alert--error">{{ error }}</div>
+
+  <div *ngIf="!loading && !error" class="table-card">
+    <div class="table-scroll">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>ID Cliente</th>
+            <th>Nombre</th>
+            <th>Email</th>
+            <th>ID Primer envío</th>
+            <th>Fecha de alta</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let c of filteredClientes">
+            <td class="cell--id">{{ c.clienteId }}</td>
+            <td class="cell--name">{{ c.customerNombre }}</td>
+            <td>{{ c.email }}</td>
+            <td class="cell--id">{{ c.envioId }}</td>
+            <td>{{ c.fechaAlta | date:'dd/MM/yyyy HH:mm' }}</td>
+          </tr>
+          <tr *ngIf="filteredClientes.length === 0">
+            <td colspan="5" class="cell--empty">No hay clientes registrados todavía.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>

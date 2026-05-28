@@ -1,0 +1,8 @@
+.modal-content {
+  border-radius: 0.8rem;
+}
+
+.modal-header,
+.modal-footer {
+  border-color: #e9ecef;
+}

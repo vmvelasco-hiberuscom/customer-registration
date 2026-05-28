@@ -1,0 +1,6 @@
+<div class="alert alert-danger validation-summary" role="alert" aria-live="polite" *ngIf="hasValidationErrors">
+  <p class="mb-2"><strong>Please fix the following fields:</strong></p>
+  <ul class="mb-0">
+    <li *ngFor="let message of validationMessages; trackBy: trackByMessage">{{ message }}</li>
+  </ul>
+</div>

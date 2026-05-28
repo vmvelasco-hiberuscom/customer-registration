@@ -1,0 +1,109 @@
+<div class="list-page">
+
+  <div class="page-header">
+    <div class="page-header__left">
+      <h1 class="page-header__title">Envíos</h1>
+      <p class="page-header__subtitle">Gestión de envíos de productos a usuarios.</p>
+    </div>
+    <button class="btn-new" (click)="openNewPanel()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" viewBox="0 0 16 16">
+        <path d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2z"/>
+      </svg>
+      Nuevo envío
+    </button>
+  </div>
+
+  <!-- Nuevo envío panel -->
+  <div *ngIf="showNewPanel" class="new-panel">
+    <div class="new-panel__header">
+      <span class="new-panel__title">Nuevo envío</span>
+      <button class="new-panel__close" (click)="cancelNew()" aria-label="Cerrar">✕</button>
+    </div>
+    <div class="new-panel__body">
+      <div *ngIf="createError" class="list-alert list-alert--error">{{ createError }}</div>
+      <div class="new-form-row">
+        <div class="form-group">
+          <label class="form-label">Usuario</label>
+          <select class="form-select" [(ngModel)]="selectedCustomerId">
+            <option value="">-- Selecciona un usuario --</option>
+            <option *ngFor="let c of customers" [value]="c.customerId">
+              {{ c.firstName }} {{ c.lastName }} ({{ c.email }})
+            </option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Producto</label>
+          <select class="form-select" [(ngModel)]="selectedProductId">
+            <option [ngValue]="null">-- Selecciona un producto --</option>
+            <option *ngFor="let p of products" [ngValue]="p.id">
+              {{ p.nombre }} — {{ p.precio | currency:'EUR':'symbol':'1.2-2' }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="new-panel__actions">
+        <button class="btn-cancel" (click)="cancelNew()">Cancelar</button>
+        <button class="btn-primary" (click)="submitNew()" [disabled]="creating">
+          {{ creating ? 'Guardando...' : 'Crear envío' }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toolbar -->
+  <div class="toolbar">
+    <div class="search-wrap">
+      <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" viewBox="0 0 16 16">
+        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.099zm-5.242 1.656a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11z"/>
+      </svg>
+      <input class="search-input" type="search" placeholder="Buscar por usuario, producto o estado..."
+        [(ngModel)]="searchTerm" aria-label="Buscar envío">
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="state-center">
+    <div class="spinner" role="status"><span class="visually-hidden">Cargando...</span></div>
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="!loading && error" class="list-alert list-alert--error">{{ error }}</div>
+
+  <!-- Table -->
+  <div *ngIf="!loading && !error" class="table-card">
+    <div class="table-scroll">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Usuario</th>
+            <th>Producto</th>
+            <th>Fecha envío</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let e of filteredEnvios">
+            <td class="cell--id">{{ e.envioId }}</td>
+            <td class="cell--name">{{ e.customerNombre }}</td>
+            <td>{{ e.productNombre }}</td>
+            <td>{{ e.fechaEnvio | date:'dd/MM/yyyy HH:mm' }}</td>
+            <td>
+              <span class="badge"
+                [class.badge--pendiente]="e.estado === 'pendiente'"
+                [class.badge--enviado]="e.estado === 'enviado'"
+                [class.badge--entregado]="e.estado === 'entregado'"
+                [class.badge--cancelado]="e.estado === 'cancelado'">
+                {{ estadoLabel(e.estado) }}
+              </span>
+            </td>
+          </tr>
+          <tr *ngIf="filteredEnvios.length === 0">
+            <td colspan="5" class="cell--empty">No se encontraron envíos.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
