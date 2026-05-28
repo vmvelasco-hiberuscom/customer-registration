@@ -14,6 +14,13 @@ Thumbs.db
 **/target/
 *.class
 *.log
+*.log.gz
+**/logs/
+
+# Eclipse / local metadata
+**/.classpath
+**/.project
+**/.settings/
 
 # Env / secrets
 .env
