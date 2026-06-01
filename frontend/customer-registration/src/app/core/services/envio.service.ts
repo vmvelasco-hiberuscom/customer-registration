@@ -8,6 +8,9 @@ export interface EnvioSummary {
   customerNombre: string;
   productId: number;
   productNombre: string;
+  direccionEnvio: string;
+  codigoPostal: string;
+  pais: string;
   fechaEnvio: string;
   estado: string;
 }
@@ -15,6 +18,16 @@ export interface EnvioSummary {
 export interface EnvioCreateRequest {
   customerId: string;
   productId: number;
+  direccionEnvio: string;
+  codigoPostal: string;
+  pais: string;
+}
+
+export interface EnvioUpdateRequest {
+  direccionEnvio: string;
+  codigoPostal: string;
+  pais: string;
+  estado: string;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -29,5 +42,9 @@ export class EnvioService {
 
   create(request: EnvioCreateRequest): Observable<EnvioSummary> {
     return this.http.post<EnvioSummary>(this.baseUrl, request);
+  }
+
+  update(envioId: number, request: EnvioUpdateRequest): Observable<EnvioSummary> {
+    return this.http.put<EnvioSummary>(`${this.baseUrl}/${envioId}`, request);
   }
 }

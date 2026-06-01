@@ -41,10 +41,66 @@
           </select>
         </div>
       </div>
+      <div class="new-form-row new-form-row--three">
+        <div class="form-group form-group--wide">
+          <label class="form-label">Dirección de envío</label>
+          <input class="form-input" type="text" [(ngModel)]="direccionEnvio" placeholder="Calle Mayor 123, 4ºB">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Código postal</label>
+          <input class="form-input" type="text" [(ngModel)]="codigoPostal" placeholder="28001">
+        </div>
+        <div class="form-group">
+          <label class="form-label">País</label>
+          <input class="form-input" type="text" [(ngModel)]="pais" placeholder="España">
+        </div>
+      </div>
       <div class="new-panel__actions">
         <button class="btn-cancel" (click)="cancelNew()">Cancelar</button>
         <button class="btn-primary" (click)="submitNew()" [disabled]="creating">
           {{ creating ? 'Guardando...' : 'Crear envío' }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Editar envío panel -->
+  <div *ngIf="showEditPanel" class="new-panel">
+    <div class="new-panel__header">
+      <span class="new-panel__title">Editar envío</span>
+      <button class="new-panel__close" (click)="cancelEdit()" aria-label="Cerrar">✕</button>
+    </div>
+    <div class="new-panel__body">
+      <div *ngIf="editError" class="list-alert list-alert--error">{{ editError }}</div>
+      <div class="new-form-row new-form-row--three">
+        <div class="form-group form-group--wide">
+          <label class="form-label">Dirección de envío</label>
+          <input class="form-input" type="text" [(ngModel)]="editDireccionEnvio" placeholder="Calle Mayor 123, 4ºB">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Código postal</label>
+          <input class="form-input" type="text" [(ngModel)]="editCodigoPostal" placeholder="28001">
+        </div>
+        <div class="form-group">
+          <label class="form-label">País</label>
+          <input class="form-input" type="text" [(ngModel)]="editPais" placeholder="España">
+        </div>
+      </div>
+      <div class="new-form-row">
+        <div class="form-group">
+          <label class="form-label">Estado</label>
+          <select class="form-select" [(ngModel)]="editEstado">
+            <option value="pendiente">Pendiente</option>
+            <option value="enviado">Enviado</option>
+            <option value="entregado">Entregado</option>
+            <option value="cancelado">Cancelado</option>
+          </select>
+        </div>
+      </div>
+      <div class="new-panel__actions">
+        <button class="btn-cancel" (click)="cancelEdit()">Cancelar</button>
+        <button class="btn-primary" (click)="submitEdit()" [disabled]="savingEdit">
+          {{ savingEdit ? 'Guardando...' : 'Guardar cambios' }}
         </button>
       </div>
     </div>
@@ -59,6 +115,10 @@
       <input class="search-input" type="search" placeholder="Buscar por usuario, producto o estado..."
         [(ngModel)]="searchTerm" aria-label="Buscar envío">
     </div>
+    <input class="search-input search-input--inline" type="search" placeholder="Filtrar por país"
+      [(ngModel)]="filterPais" aria-label="Filtrar por país">
+    <input class="search-input search-input--inline" type="search" placeholder="Filtrar por código postal"
+      [(ngModel)]="filterCodigoPostal" aria-label="Filtrar por código postal">
   </div>
 
   <!-- Loading -->
@@ -78,8 +138,12 @@
             <th>ID</th>
             <th>Usuario</th>
             <th>Producto</th>
+            <th>Dirección</th>
+            <th>Código postal</th>
+            <th>País</th>
             <th>Fecha envío</th>
             <th>Estado</th>
+            <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
@@ -87,6 +151,9 @@
             <td class="cell--id">{{ e.envioId }}</td>
             <td class="cell--name">{{ e.customerNombre }}</td>
             <td>{{ e.productNombre }}</td>
+            <td>{{ e.direccionEnvio }}</td>
+            <td>{{ e.codigoPostal }}</td>
+            <td>{{ e.pais }}</td>
             <td>{{ e.fechaEnvio | date:'dd/MM/yyyy HH:mm' }}</td>
             <td>
               <span class="badge"
@@ -97,12 +164,91 @@
                 {{ estadoLabel(e.estado) }}
               </span>
             </td>
+            <td>
+              <div class="actions-buttons">
+                <button class="btn-edit" (click)="openMapModal(e)" title="Ver mapa del destino">Mapa</button>
+                <button class="btn-edit" (click)="openSimulationModal(e)" title="Simular envío">Simular</button>
+                <button class="btn-edit" (click)="openEditPanel(e)">Editar</button>
+              </div>
+            </td>
           </tr>
           <tr *ngIf="filteredEnvios.length === 0">
-            <td colspan="5" class="cell--empty">No se encontraron envíos.</td>
+            <td colspan="9" class="cell--empty">No se encontraron envíos.</td>
           </tr>
         </tbody>
       </table>
+    </div>
+  </div>
+
+  <!-- Map Modal -->
+  <div *ngIf="showMapModal" class="modal-overlay" (click)="closeMapModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2 class="modal-title">Mapa del destino: {{ mapAddress }}</h2>
+        <button class="modal-close" (click)="closeMapModal()" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="map-container" #mapContainer></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-cancel" (click)="closeMapModal()">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Simulation Modal -->
+  <div *ngIf="showSimulationModal && simulationEnvio" class="modal-overlay" (click)="closeSimulationModal()">
+    <div class="modal-content modal-content--simulation" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2 class="modal-title">Simulación de envío #{{ simulationEnvio.envioId }}</h2>
+        <button class="modal-close" (click)="closeSimulationModal()" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body simulation-body">
+        <div class="simulation-grid">
+          <div class="simulation-item">
+            <span class="simulation-label">Origen</span>
+            <strong>{{ simulationOrigin }}</strong>
+          </div>
+          <div class="simulation-item">
+            <span class="simulation-label">Destino</span>
+            <strong>{{ simulationEnvio.direccionEnvio }}, {{ simulationEnvio.codigoPostal }}, {{ simulationEnvio.pais }}</strong>
+          </div>
+          <div class="simulation-item">
+            <span class="simulation-label">Salida</span>
+            <strong>{{ simulationDeparture | date:'dd/MM/yyyy HH:mm' }}</strong>
+          </div>
+          <div class="simulation-item">
+            <span class="simulation-label">ETA (48h)</span>
+            <strong>{{ simulationEta | date:'dd/MM/yyyy HH:mm' }}</strong>
+          </div>
+          <div class="simulation-item">
+            <span class="simulation-label">Estado</span>
+            <strong>{{ simulationStatusLabel }}</strong>
+          </div>
+          <div class="simulation-item">
+            <span class="simulation-label">Tiempo restante</span>
+            <strong>{{ simulationRemainingLabel }}</strong>
+          </div>
+          <div class="simulation-item" *ngIf="simulationDistanceKm !== null">
+            <span class="simulation-label">Distancia estimada</span>
+            <strong>{{ simulationDistanceKm }} km</strong>
+          </div>
+        </div>
+
+        <div class="simulation-progress-wrap">
+          <div class="simulation-progress-label">Progreso estimado: {{ simulationProgressPercent }}%</div>
+          <div class="simulation-progress-bar">
+            <div class="simulation-progress-fill" [style.width.%]="simulationProgressPercent"></div>
+          </div>
+        </div>
+
+        <div class="simulation-map-wrap">
+          <div class="simulation-map-container" #simulationMapContainer></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-cancel" (click)="closeSimulationModal()">Cerrar</button>
+      </div>
     </div>
   </div>
 

@@ -9,6 +9,28 @@
 .page-header__title { font-size: 1.6rem; font-weight: 700; color: #1e293b; margin: 0 0 0.25rem; }
 .page-header__subtitle { font-size: 0.9rem; color: #64748b; margin: 0; }
 
+.quick-links {
+  margin-top: 1rem;
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.quick-links__btn {
+  border: none;
+  border-radius: 999px;
+  padding: 0.55rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.quick-links__btn--teal { background: #0f766e; }
+.quick-links__btn--rose { background: #be123c; }
+
+.quick-links__btn:hover { opacity: 0.9; }
+
 .feature-cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -30,6 +52,8 @@
 .feature-card--green  { background: #f0fdf4; border-color: #bbf7d0; }
 .feature-card--orange { background: #fff7ed; border-color: #fed7aa; }
 .feature-card--purple { background: #faf5ff; border-color: #e9d5ff; }
+.feature-card--teal   { background: #ecfeff; border-color: #a5f3fc; }
+.feature-card--rose   { background: #fff1f2; border-color: #fecdd3; }
 
 .feature-card__icon-wrap {
   width: 64px; height: 64px; border-radius: 50%;
@@ -39,6 +63,8 @@
 .feature-card__icon-wrap--green  { background: #059669; }
 .feature-card__icon-wrap--orange { background: #ea580c; }
 .feature-card__icon-wrap--purple { background: #7c3aed; }
+.feature-card__icon-wrap--teal   { background: #0891b2; }
+.feature-card__icon-wrap--rose   { background: #e11d48; }
 
 .feature-card__title { font-size: 1.1rem; font-weight: 700; color: #1e293b; margin: 0; }
 .feature-card__desc  { font-size: 0.85rem; color: #64748b; margin: 0 0 0.75rem; flex: 1; }
@@ -53,6 +79,8 @@
 .feature-card__btn--green  { background: #059669; color: white; }
 .feature-card__btn--orange { background: #ea580c; color: white; }
 .feature-card__btn--purple { background: #7c3aed; color: white; }
+.feature-card__btn--teal   { background: #0891b2; color: white; }
+.feature-card__btn--rose   { background: #e11d48; color: white; }
 
 .summary-section {
   background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px;

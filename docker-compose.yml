@@ -1,28 +1,36 @@
 version: '3.9'
 services:
-  postgres:
-    image: postgres:16
+  oracle:
+    image: gvenzl/oracle-xe:21-slim
     environment:
-      POSTGRES_DB: customer_db
-      POSTGRES_USER: app_user
-      POSTGRES_PASSWORD: app_password
+      ORACLE_PASSWORD: oracle
+      APP_USER: customer_service
+      APP_USER_PASSWORD: password
     ports:
-      - "5432:5432"
+      - "1521:1521"
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - oracledata:/opt/oracle/oradata
+    healthcheck:
+      test: ["CMD-SHELL", "healthcheck.sh"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
 
   customer-service:
     build:
       context: ./backend/customer-service
       dockerfile: Dockerfile
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/customer_db
-      SPRING_DATASOURCE_USERNAME: app_user
-      SPRING_DATASOURCE_PASSWORD: app_password
+      SPRING_DATASOURCE_URL: jdbc:oracle:thin:@//oracle:1521/XEPDB1
+      SPRING_DATASOURCE_USERNAME: customer_service
+      SPRING_DATASOURCE_PASSWORD: password
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: oracle.jdbc.OracleDriver
+      SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.OracleDialect
     ports:
       - "8080:8080"
     depends_on:
-      - postgres
+      oracle:
+        condition: service_healthy
 
 volumes:
-  pgdata:
+  oracledata:

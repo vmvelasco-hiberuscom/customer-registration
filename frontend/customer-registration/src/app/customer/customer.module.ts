@@ -10,10 +10,10 @@ import { RegistrationFormComponent } from './components/registration-form/regist
 import { SuccessModalComponent } from './components/success-modal/success-modal.component';
 import { ValidationSummaryComponent } from './components/validation-summary/validation-summary.component';
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
+import { EnvioListComponent } from './components/envio-list/envio-list.component';
+import { IncidenciasComponent } from './components/incidencias/incidencias.component';
 import { ProductListComponent } from './components/product-list/product-list.component';
 import { ProductRegistrationComponent } from './components/product-registration/product-registration.component';
-import { EnvioListComponent } from './components/envio-list/envio-list.component';
-import { ClienteListComponent } from './components/cliente-list/cliente-list.component';
 
 @NgModule({
   declarations: [
@@ -24,12 +24,20 @@ import { ClienteListComponent } from './components/cliente-list/cliente-list.com
     SuccessModalComponent,
     ValidationSummaryComponent,
     LoadingSpinnerComponent,
+    EnvioListComponent,
+    IncidenciasComponent,
     ProductListComponent,
     ProductRegistrationComponent,
-    EnvioListComponent,
-    ClienteListComponent,
   ],
   imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule],
-  exports: [HomeComponent, CustomerListComponent, RegistrationPageComponent, ProductListComponent, ProductRegistrationComponent, EnvioListComponent, ClienteListComponent],
+  exports: [
+    HomeComponent,
+    CustomerListComponent,
+    RegistrationPageComponent,
+    EnvioListComponent,
+    IncidenciasComponent,
+    ProductListComponent,
+    ProductRegistrationComponent,
+  ],
 })
 export class CustomerModule {}

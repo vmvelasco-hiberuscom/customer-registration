@@ -1,23 +1,14 @@
 package com.example.customer.dto;
 
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.UUID;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class EnvioCreateRequest {
-
-    @NotNull
-    private UUID customerId;
-
-    @NotNull
-    private Long productId;
+public class EnvioUpdateRequest {
 
     @NotBlank
     private String direccionEnvio;
@@ -27,4 +18,7 @@ public class EnvioCreateRequest {
 
     @NotBlank
     private String pais;
+
+    @NotBlank
+    private String estado;
 }

@@ -1,0 +1,150 @@
+<section class="incidencias-page" aria-labelledby="incidencias-title">
+  <header class="incidencias-header">
+    <div>
+      <h1 id="incidencias-title" class="incidencias-title">Incidencias y reclamaciones</h1>
+      <p class="incidencias-subtitle">Seguimiento de incidencias relacionadas con los envíos.</p>
+    </div>
+    <button class="btn-new" (click)="openNewPanel()">Nueva incidencia</button>
+  </header>
+
+  <div *ngIf="showNewPanel" class="new-panel">
+    <div class="new-panel__header">
+      <span class="new-panel__title">Nueva incidencia</span>
+      <button class="new-panel__close" (click)="cancelNew()" aria-label="Cerrar">✕</button>
+    </div>
+    <div class="new-panel__body">
+      <div *ngIf="createError" class="incidencias-feedback incidencias-feedback--error">{{ createError }}</div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Envío</label>
+          <select class="form-select" [(ngModel)]="selectedEnvioId">
+            <option [ngValue]="null">-- Selecciona un envío --</option>
+            <option *ngFor="let e of envios" [ngValue]="e.envioId">#{{ e.envioId }} - {{ e.customerNombre }}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Tipo</label>
+          <select class="form-select" [(ngModel)]="tipo">
+            <option value="incidencia">Incidencia</option>
+            <option value="reclamacion">Reclamación</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Estado</label>
+          <select class="form-select" [(ngModel)]="estado">
+            <option value="abierta">Abierta</option>
+            <option value="en revision">En revisión</option>
+            <option value="resuelta">Resuelta</option>
+            <option value="cerrada">Cerrada</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Descripción</label>
+        <textarea class="form-textarea" [(ngModel)]="descripcion" rows="3"></textarea>
+      </div>
+      <div class="new-panel__actions">
+        <button class="btn-cancel" (click)="cancelNew()">Cancelar</button>
+        <button class="btn-primary" (click)="submitNew()" [disabled]="creating">{{ creating ? 'Guardando...' : 'Crear incidencia' }}</button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="showEditPanel" class="new-panel">
+    <div class="new-panel__header">
+      <span class="new-panel__title">Editar incidencia</span>
+      <button class="new-panel__close" (click)="cancelEdit()" aria-label="Cerrar">✕</button>
+    </div>
+    <div class="new-panel__body">
+      <div *ngIf="editError" class="incidencias-feedback incidencias-feedback--error">{{ editError }}</div>
+      <div class="form-grid form-grid--two">
+        <div class="form-group">
+          <label class="form-label">Tipo</label>
+          <select class="form-select" [(ngModel)]="editTipo">
+            <option value="incidencia">Incidencia</option>
+            <option value="reclamacion">Reclamación</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Estado</label>
+          <select class="form-select" [(ngModel)]="editEstado">
+            <option value="abierta">Abierta</option>
+            <option value="en revision">En revisión</option>
+            <option value="resuelta">Resuelta</option>
+            <option value="cerrada">Cerrada</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Descripción</label>
+        <textarea class="form-textarea" [(ngModel)]="editDescripcion" rows="3"></textarea>
+      </div>
+      <div class="new-panel__actions">
+        <button class="btn-cancel" (click)="cancelEdit()">Cancelar</button>
+        <button class="btn-primary" (click)="submitEdit()" [disabled]="savingEdit">{{ savingEdit ? 'Guardando...' : 'Guardar cambios' }}</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="incidencias-panel">
+    <div *ngIf="loading" class="incidencias-feedback">Cargando incidencias...</div>
+    <div *ngIf="!loading && error" class="incidencias-feedback incidencias-feedback--error">{{ error }}</div>
+
+    <div class="filters" *ngIf="!loading && !error">
+      <div class="form-group">
+        <label class="form-label">Filtrar por estado</label>
+        <select class="form-select" [(ngModel)]="filterEstado">
+          <option value="">Todos</option>
+          <option value="abierta">Abierta</option>
+          <option value="en revision">En revisión</option>
+          <option value="resuelta">Resuelta</option>
+          <option value="cerrada">Cerrada</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Filtrar por envío</label>
+        <select class="form-select" [(ngModel)]="filterEnvioId">
+          <option [ngValue]="null">Todos</option>
+          <option *ngFor="let e of envios" [ngValue]="e.envioId">#{{ e.envioId }} - {{ e.customerNombre }}</option>
+        </select>
+      </div>
+    </div>
+
+    <table class="incidencias-table" aria-label="Listado de incidencias de envíos">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Envío</th>
+          <th>Tipo</th>
+          <th>Estado</th>
+          <th>Descripción</th>
+          <th>Fecha</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of filteredIncidencias">
+          <td>#{{ item.incidenciaId }}</td>
+          <td>#{{ item.envioId }}</td>
+          <td>{{ item.tipo | titlecase }}</td>
+          <td>
+            <span class="badge" [class.badge--open]="item.estado === 'abierta'" [class.badge--review]="item.estado === 'en revision'" [class.badge--resolved]="item.estado === 'resuelta'" [class.badge--closed]="item.estado === 'cerrada'">
+              {{ item.estado | titlecase }}
+            </span>
+          </td>
+          <td>{{ item.descripcion }}</td>
+          <td>{{ item.fechaIncidencia | date:'dd/MM/yyyy' }}</td>
+          <td>
+            <button class="btn-edit" (click)="openEditPanel(item)">Editar</button>
+            <button class="btn-delete" (click)="deleteIncidencia(item)" [disabled]="deletingId === item.incidenciaId">
+              {{ deletingId === item.incidenciaId ? 'Eliminando...' : 'Eliminar' }}
+            </button>
+          </td>
+        </tr>
+        <tr *ngIf="!loading && !error && filteredIncidencias.length === 0">
+          <td colspan="7" class="incidencias-empty">No hay incidencias registradas.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

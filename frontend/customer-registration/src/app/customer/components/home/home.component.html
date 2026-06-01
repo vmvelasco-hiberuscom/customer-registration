@@ -4,6 +4,14 @@
   <div class="page-header">
     <h1 class="page-header__title">Bienvenido, Admin</h1>
     <p class="page-header__subtitle">Gestiona tus clientes y usuarios desde aquí.</p>
+    <div class="quick-links" aria-label="Accesos rápidos">
+      <button class="quick-links__btn quick-links__btn--teal" (click)="goToEnvios()" aria-label="Ir a envíos">
+        Envíos
+      </button>
+      <button class="quick-links__btn quick-links__btn--rose" (click)="goToIncidencias()" aria-label="Ir a incidencias">
+        Incidencias
+      </button>
+    </div>
   </div>
 
   <!-- Feature cards -->
@@ -64,6 +72,37 @@
       <h2 class="feature-card__title">Alta de producto</h2>
       <p class="feature-card__desc">Registra un nuevo producto en el catálogo</p>
       <button class="feature-card__btn feature-card__btn--purple" (click)="goToProductRegistration()" aria-label="Ir a alta de producto">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="feature-card feature-card--teal">
+      <div class="feature-card__icon-wrap feature-card__icon-wrap--teal">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="white" viewBox="0 0 16 16">
+          <path d="M0 3.5A1.5 1.5 0 0 1 1.5 2h9A1.5 1.5 0 0 1 12 3.5V5h1.02a1.5 1.5 0 0 1 1.17.563l1.481 1.85a1.5 1.5 0 0 1 .329.938V10.5a1.5 1.5 0 0 1-1.5 1.5H14a2 2 0 1 1-4 0H5a2 2 0 1 1-3.998-.085A1.5 1.5 0 0 1 0 10.5v-7zm1.294 7.456A2 2 0 0 1 4.732 11h5.536a2.01 2.01 0 0 1 .732-.732V3.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .294.456zM12 10a2 2 0 0 1 1.732 1h.768a.5.5 0 0 0 .5-.5V8.35a.5.5 0 0 0-.11-.312l-1.48-1.85A.5.5 0 0 0 13.02 6H12v4zm-8 2a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm8 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+        </svg>
+      </div>
+      <h2 class="feature-card__title">Envíos</h2>
+      <p class="feature-card__desc">Gestiona los envíos de productos a usuarios</p>
+      <button class="feature-card__btn feature-card__btn--teal" (click)="goToEnvios()" aria-label="Ir a envíos">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="feature-card feature-card--rose">
+      <div class="feature-card__icon-wrap feature-card__icon-wrap--rose">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="white" viewBox="0 0 16 16">
+          <path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016l6.857 3.922c.11.063.178.177.178.304v3.908c0 2.535-1.428 4.92-3.91 6.39l-2.658 1.574a.5.5 0 0 1-.514 0L5.36 16.54C2.878 15.07 1.45 12.685 1.45 10.15V6.242c0-.127.068-.24.178-.304L7.938 2.016zM8 3.173 2.45 6.35v3.8c0 2.19 1.23 4.251 3.366 5.518L8 16.98l2.184-1.313c2.136-1.267 3.366-3.328 3.366-5.518v-3.8L8 3.173z"/>
+          <path d="M7.002 6a1 1 0 1 1 2 0l-.35 4.2a.65.65 0 0 1-1.298 0L7.002 6zm.998 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+        </svg>
+      </div>
+      <h2 class="feature-card__title">Incidencias</h2>
+      <p class="feature-card__desc">Revisa incidencias y reclamaciones de los envíos</p>
+      <button class="feature-card__btn feature-card__btn--rose" (click)="goToIncidencias()" aria-label="Ir a incidencias">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
           <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"/>
         </svg>

@@ -6,6 +6,7 @@ import com.example.customer.domain.Envio;
 import com.example.customer.domain.Product;
 import com.example.customer.dto.EnvioCreateRequest;
 import com.example.customer.dto.EnvioDto;
+import com.example.customer.dto.EnvioUpdateRequest;
 import com.example.customer.repository.ClienteRepository;
 import com.example.customer.repository.CustomerRepository;
 import com.example.customer.repository.EnvioRepository;
@@ -49,6 +50,9 @@ public class EnvioService {
         Envio envio = Envio.builder()
                 .customer(customer)
                 .product(product)
+            .direccionEnvio(request.getDireccionEnvio())
+            .codigoPostal(request.getCodigoPostal())
+            .pais(request.getPais())
                 .fechaEnvio(LocalDateTime.now())
                 .estado("pendiente")
                 .build();
@@ -68,6 +72,23 @@ public class EnvioService {
         return Optional.of(toDto(envio));
     }
 
+    @Transactional
+    public Optional<EnvioDto> update(Long envioId, EnvioUpdateRequest request) {
+        Optional<Envio> envioOpt = envioRepository.findById(envioId);
+        if (envioOpt.isEmpty()) {
+            return Optional.empty();
+        }
+
+        Envio envio = envioOpt.get();
+        envio.setDireccionEnvio(request.getDireccionEnvio());
+        envio.setCodigoPostal(request.getCodigoPostal());
+        envio.setPais(request.getPais());
+        envio.setEstado(request.getEstado());
+
+        Envio updated = envioRepository.save(envio);
+        return Optional.of(toDto(updated));
+    }
+
     private EnvioDto toDto(Envio e) {
         return EnvioDto.builder()
                 .envioId(e.getEnvioId())
@@ -75,6 +96,9 @@ public class EnvioService {
                 .customerNombre(e.getCustomer().getFirstName() + " " + e.getCustomer().getLastName())
                 .productId(e.getProduct().getProductId())
                 .productNombre(e.getProduct().getNombre())
+                .direccionEnvio(e.getDireccionEnvio())
+                .codigoPostal(e.getCodigoPostal())
+                .pais(e.getPais())
                 .fechaEnvio(e.getFechaEnvio())
                 .estado(e.getEstado())
                 .build();

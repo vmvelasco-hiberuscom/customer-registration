@@ -19,40 +19,33 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "envios")
+@Table(name = "incidencias")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Envio {
+public class Incidencia {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "envio_id", nullable = false)
-    private Long envioId;
+    @Column(name = "incidencia_id", nullable = false)
+    private Long incidenciaId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_id", nullable = false)
-    private Customer customer;
+    @JoinColumn(name = "envio_id", nullable = false)
+    private Envio envio;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id", nullable = false)
-    private Product product;
-
-    @Column(name = "direccion_envio", nullable = false, length = 255)
-    private String direccionEnvio;
-
-    @Column(name = "codigo_postal", nullable = false, length = 20)
-    private String codigoPostal;
-
-    @Column(name = "pais", nullable = false, length = 100)
-    private String pais;
-
-    @Column(name = "fecha_envio", nullable = false)
-    private LocalDateTime fechaEnvio;
+    @Column(name = "tipo", nullable = false, length = 30)
+    private String tipo;
 
     @Column(name = "estado", nullable = false, length = 30)
     private String estado;
+
+    @Column(name = "descripcion", nullable = false, length = 1000)
+    private String descripcion;
+
+    @Column(name = "fecha_incidencia", nullable = false)
+    private LocalDateTime fechaIncidencia;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)

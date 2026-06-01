@@ -38,4 +38,12 @@ export class HomeComponent implements OnInit {
   goToProductRegistration(): void {
     this.router.navigate(['/product-registration']);
   }
+
+  goToEnvios(): void {
+    this.router.navigate(['/envios']);
+  }
+
+  goToIncidencias(): void {
+    this.router.navigate(['/incidencias']);
+  }
 }

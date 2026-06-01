@@ -11,15 +11,11 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class EnvioDto {
+public class IncidenciaDto {
+    private Long incidenciaId;
     private Long envioId;
-    private String customerId;
-    private String customerNombre;
-    private Long productId;
-    private String productNombre;
-    private String direccionEnvio;
-    private String codigoPostal;
-    private String pais;
-    private LocalDateTime fechaEnvio;
+    private String tipo;
     private String estado;
+    private String descripcion;
+    private LocalDateTime fechaIncidencia;
 }
